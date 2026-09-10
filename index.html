@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio BTS SIO SISR – [Andrea Laurent]</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:     #0D1B2A;
+      --navy-mid: #152338;
+      --navy-card:#1A2D42;
+      --steel:    #8BA3B8;
+      --cyan:     #00D4FF;
+      --cyan-dim: rgba(0,212,255,.12);
+      --white:    #F0F4F8;
+      --text:     #C8D8E8;
+      --accent2:  #3ECFCF;
+      --danger:   #FF6B6B;
+      --sidebar-w: 270px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--navy-mid);
+      border-right: 1px solid rgba(0,212,255,.15);
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem 1.5rem;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem;
+      color: var(--cyan);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      opacity: .8;
+    }
+
+    .avatar-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: .75rem;
+      box-shadow: 0 0 0 3px var(--navy-mid), 0 0 0 5px rgba(0,212,255,.35);
+    }
+
+    .sidebar-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      text-align: center;
+    }
+
+    .sidebar-role {
+      font-size: .75rem;
+      color: var(--cyan);
+      text-align: center;
+      margin-top: .25rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(0,212,255,.15);
+      margin: 1.5rem 0;
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      padding: .6rem .75rem;
+      border-radius: 8px;
+      color: var(--steel);
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 500;
+      transition: background .2s, color .2s;
+      margin-bottom: .2rem;
+    }
+
+    nav a:hover, nav a.active {
+      background: var(--cyan-dim);
+      color: var(--cyan);
+    }
+
+    nav a .icon { font-size: 1rem; width: 20px; text-align: center; }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      font-size: .7rem;
+      color: var(--steel);
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 0;
+    }
+
+    section {
+      padding: 5rem 4rem;
+      border-bottom: 1px solid rgba(0,212,255,.08);
+      max-width: 900px;
+    }
+
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .7rem;
+      color: var(--cyan);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: .75rem;
+      opacity: .85;
+    }
+
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1.75rem;
+      line-height: 1.15;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem;
+      max-width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,212,255,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .terminal-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .85rem;
+      color: var(--steel);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .terminal-line .prompt { color: var(--cyan); }
+    .terminal-line .typed { color: var(--white); }
+    .cursor {
+      display: inline-block;
+      width: 9px; height: 1.1em;
+      background: var(--cyan);
+      vertical-align: text-bottom;
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: .5rem;
+    }
+
+    .hero-name span { color: var(--cyan); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--steel);
+      margin-bottom: 2.5rem;
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    .badge-row {
+      display: flex; flex-wrap: wrap; gap: .6rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .7rem;
+      padding: .35rem .75rem;
+      border-radius: 99px;
+      border: 1px solid rgba(0,212,255,.35);
+      color: var(--cyan);
+      background: var(--cyan-dim);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 1.75rem;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: .9rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-primary {
+      background: var(--cyan);
+      color: var(--navy);
+    }
+
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 1px solid rgba(0,212,255,.4);
+      color: var(--cyan);
+      background: transparent;
+    }
+
+    .btn-outline:hover { background: var(--cyan-dim); transform: translateY(-2px); }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+    /* ── ABOUT ── */
+    #about p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .info-card {
+      background: var(--navy-card);
+      border: 1px solid rgba(0,212,255,.1);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+    }
+
+    .info-card .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem;
+      color: var(--cyan);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: .35rem;
+    }
+
+    .info-card .value {
+      font-size: .9rem;
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .skill-cat {
+      background: var(--navy-card);
+      border: 1px solid rgba(0,212,255,.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color .2s;
+    }
+
+    .skill-cat:hover { border-color: rgba(0,212,255,.35); }
+
+    .skill-cat h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      margin-bottom: .9rem;
+    }
+
+    .skill-item:last-child { margin-bottom: 0; }
+
+    .skill-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: .82rem;
+      color: var(--text);
+    }
+
+    .skill-top span:last-child {
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .75rem;
+    }
+
+    .bar {
+      height: 5px;
+      background: rgba(255,255,255,.07);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--accent2));
+      animation: grow .8s ease forwards;
+    }
+
+    @keyframes grow { from { width: 0; } }
+
+    /* ── CERTIFICATIONS ── */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .cert-card {
+      background: var(--navy-card);
+      border: 1px solid rgba(0,212,255,.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .cert-card:hover { transform: translateY(-3px); border-color: rgba(0,212,255,.35); }
+
+    .cert-icon {
+      font-size: 2rem;
+      width: 52px; height: 52px;
+      background: var(--cyan-dim);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .cert-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .cert-name a {
+      color: var(--white);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .cert-name a:hover {
+      color: var(--cyan);
+    }
+
+    .cert-issuer {
+      font-size: .8rem;
+      color: var(--steel);
+    }
+
+    .cert-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .7rem;
+      color: var(--cyan);
+    }
+
+    .cert-status {
+      display: inline-block;
+      font-size: .68rem;
+      padding: .25rem .6rem;
+      border-radius: 99px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .status-ok { background: rgba(62,207,207,.15); color: var(--accent2); }
+    .status-wip { background: rgba(255,107,107,.1); color: var(--danger); }
+
+    /* ── PARCOURS ── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--cyan), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.25rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 6px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 3px var(--navy), 0 0 0 5px rgba(0,212,255,.3);
+    }
+
+    .tl-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .72rem;
+      color: var(--cyan);
+      margin-bottom: .3rem;
+    }
+
+    .tl-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: .2rem;
+    }
+
+    .tl-place {
+      font-size: .83rem;
+      color: var(--steel);
+      margin-bottom: .5rem;
+    }
+
+    .tl-desc {
+      font-size: .85rem;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* ── PROJETS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--navy-card);
+      border: 1px solid rgba(0,212,255,.1);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .project-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,.4); }
+
+    .project-header {
+      padding: 1.25rem 1.5rem 1rem;
+      border-bottom: 1px solid rgba(0,212,255,.08);
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    .project-icon {
+      font-size: 1.4rem;
+      width: 44px; height: 44px;
+      background: var(--cyan-dim);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .project-link {
+      color: var(--white);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .project-link:hover {
+      color: var(--cyan);
+      text-decoration: underline;
+    }
+
+    .project-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem;
+      color: var(--cyan);
+    }
+
+    .project-body {
+      padding: 1rem 1.5rem 1.25rem;
+    }
+
+    .project-desc {
+      font-size: .83rem;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: .4rem; }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem;
+      padding: .22rem .55rem;
+      border-radius: 5px;
+      background: rgba(0,212,255,.08);
+      color: var(--cyan);
+      border: 1px solid rgba(0,212,255,.18);
+    }
+
+    /* ── E5 TABLE LINK ── */
+    .e5-block {
+      background: var(--navy-card);
+      border: 1px solid rgba(0,212,255,.2);
+      border-radius: 14px;
+      padding: 2rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .e5-icon {
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+
+    .e5-text h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: .4rem;
+    }
+
+    .e5-text p {
+      font-size: .85rem;
+      color: var(--steel);
+      line-height: 1.6;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .contact-card {
+      background: var(--navy-card);
+      border: 1px solid rgba(0,212,255,.1);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color .2s, transform .2s;
+    }
+
+    .contact-card:hover { border-color: rgba(0,212,255,.4); transform: translateY(-2px); }
+
+    .contact-card .c-icon {
+      font-size: 1.5rem;
+      width: 44px; height: 44px;
+      background: var(--cyan-dim);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-card .c-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem;
+      color: var(--cyan);
+      margin-bottom: .25rem;
+    }
+
+    .contact-card .c-value {
+      font-size: .85rem;
+      color: var(--white);
+      word-break: break-all;
+    }
+
+    /* ── FORM ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-group label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .7rem;
+      color: var(--cyan);
+      letter-spacing: .1em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--navy-card);
+      border: 1px solid rgba(0,212,255,.18);
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: .88rem;
+      outline: none;
+      transition: border-color .2s;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--cyan); }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(139,163,184,.4); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      section { padding: 4rem 1.5rem; }
+      #hero { padding: 4rem 1.5rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bar-fill { animation: none; }
+      .cursor { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">BTS SIO · SISR</div>
+
+  <div class="avatar-wrap">
+    <div class="avatar">AL</div>
+    <div class="sidebar-name">Andrea Laurent</div>
+    <div class="sidebar-role">Étudiant en BTS SIO SISR</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <nav>
+    <a href="#hero" class="active"><span class="icon">🏠</span> Accueil</a>
+    <a href="#about"><span class="icon">👤</span> À propos</a>
+    <a href="#skills"><span class="icon">⚙️</span> Compétences</a>
+    <a href="#certifications"><span class="icon">🏆</span> Certifications</a>
+    <a href="#parcours"><span class="icon">📚</span> Parcours scolaire</a>
+    <a href="#projets"><span class="icon">🗂️</span> Projets</a>
+    <a href="#e5"><span class="icon">📋</span> Tableau E5</a>
+    <a href="#contact"><span class="icon">✉️</span> Contact</a>
+  </nav>
+
+  <div class="sidebar-footer">© 2024 – Portfolio E5</div>
+</aside>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="terminal-line">
+      <span class="prompt">➜</span>
+      <span class="typed">Bienvenue sur mon portfolio !</span>
+      <span class="cursor"></span>
+    </div>
+    <h1 class="hero-name">Andrea<br><span>Laurent</span></h1>
+    <p class="hero-sub">
+      Étudiant en BTS SIO option SISR, passionné par l'administration réseau, la cybersécurité et les infrastructures systèmes. Prêt à mettre mes compétences au service de ton entreprise.
+    </p>
+    <div class="badge-row">
+      <span class="badge">🖧 Réseaux</span>
+      <span class="badge">🔒 Cybersécurité</span>
+      <span class="badge">🐧 Linux</span>
+      <span class="badge">🪟 Active Directory Windows</span>
+    </div>
+    <div class="btn-row">
+      <a href="#contact" class="btn btn-primary">✉️ Me contacter</a>
+      <a href="#e5" class="btn btn-outline">📋 Voir le tableau E5</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-tag">// 01 · À propos</div>
+    <h2>Qui suis-je ?</h2>
+    <p>
+      Je m'appelle <strong style="color:var(--white)">Andrea Laurent</strong>, étudiant en 2ème année de BTS Services Informatiques aux Organisations, spécialité Solutions d'Infrastructure, Systèmes et Réseaux (SISR) à l'Institution des Chartreux à Lyon.
+    </p>
+    <p>
+      Passionné d'informatique depuis le lycée, j'ai choisi la spécialité SISR pour approfondir mes connaissances en administration des systèmes et des réseaux. J'aime résoudre des problèmes complexes, optimiser des infrastructures et garantir la sécurité des données.
+    </p>
+    <p>
+      En dehors de mes études, je fais du Tennis et de la lecture
+    </p>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="label">Formation</div>
+        <div class="value">BTS SIO SISR</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Établissement</div>
+        <div class="value">Institution des Chartreux</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Ville</div>
+        <div class="value">Lyon</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Année</div>
+        <div class="value">2025 – 2027</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Disponibilité</div>
+        <div class="value">Stage</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Permis</div>
+        <div class="value">Aucun</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-tag">// 02 · Compétences</div>
+    <h2>Mes compétences techniques</h2>
+    <div class="skills-grid">
+
+      <div class="skill-cat">
+        <h3>🖧 Réseaux</h3>
+        <div class="skill-item">
+          <div class="skill-top"><span>TCP/IP, VLAN</span><span>85%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>Switching</span><span>80%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>Cisco IOS / Packet Tracer</span><span>75%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>Firewalling</span><span>70%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <h3>💻 Systèmes</h3>
+        <div class="skill-item">
+          <div class="skill-top"><span>Active Directory / GPO</span><span>80%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>Linux (Red Hat)</span><span>75%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>Virtualisation (VMware/HyperV)</span><span>78%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:78%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <h3>🔒 Cybersécurité</h3>
+        <div class="skill-item">
+          <div class="skill-top"><span>Audit & tests de sécurité</span><span>65%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:65%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>RGPD & politique de sécurité</span><span>70%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>Wireshark </span><span>68%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:68%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>SSH </span><span>65%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:65%"></div></div>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <h3>🛠️ Scripting & Outils</h3>
+        <div class="skill-item">
+          <div class="skill-top"><span>PowerShell</span><span>70%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>Bash / Shell</span><span>65%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:65%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>Python / PHP / JavaScript (basique)</span><span>55%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:55%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span>Git (GitHub / GitLab)</span><span>60%</span></div>
+          <div class="bar"><div class="bar-fill" style="width:60%"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-tag">// 03 · Certifications</div>
+    <h2>Mes certifications</h2>
+    <div class="cert-grid">
+
+      <div class="cert-card">
+        <div class="cert-icon">🛡️</div>
+        <div class="cert-name">Cisco CCST (en cours)</div>
+        <div class="cert-issuer">Certification en cybersécurité - Cisco Networking Academy</div>
+        <div class="cert-date">2025 – 2027</div>
+        <span class="cert-status status-wip">En cours</span>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">🛡️</div>
+        <div class="cert-name">Pix – Niveau indépendant</div>
+        <div class="cert-issuer">GIP Pix</div>
+        <div class="cert-date">2024</div>
+        <span class="cert-status status-wip">En cours</span>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">🛡️</div>
+        <div class="cert-name">CSNA Stormshield (en préparation)</div>
+        <div class="cert-issuer">STORMSHIELD</div>
+        <div class="cert-date">2027</div>
+        <span class="cert-status status-wip">En préparation</span>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">🛡️</div>
+        <div class="cert-name">
+          <a href="Fortinet Certified Fundamentals in Cybersecurity.pdf" target="_blank" rel="noopener noreferrer" download>Fortinet Certified Fundamentals</a>
+        </div>
+        <div class="cert-issuer">Fortinet</div>
+        <div class="cert-date">2026</div>
+        <span class="cert-status status-ok">Obtenu</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PARCOURS SCOLAIRE -->
+  <section id="parcours">
+    <div class="section-tag">// 04 · Parcours scolaire</div>
+    <h2>Mon parcours</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="tl-date">2025 – 2027</div>
+        <div class="tl-title">BTS SIO – Spécialité SISR</div>
+        <div class="tl-place">📍 Institution des Chartreux · Lyon</div>
+        <div class="tl-desc">
+          Formation en Solutions d'Infrastructure, Systèmes et Réseaux. Administration réseau, sécurité, virtualisation et gestion des infrastructures. stage en entreprise inclus.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-date">Stage – Juillet 2026</div>
+        <div class="tl-title">Stagiaire Technicien Infrastructure IT</div>
+        <div class="tl-place">📍 Géodis CL · ST Exupery</div>
+        <div class="tl-desc">
+          Administration du réseau local, configuration de switches Cisco, Masterisation d'ordinateur portable.
+        </div> 
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-date">2024 - 2025</div>
+        <div class="tl-title">Baccalauréat Général</div>
+        <div class="tl-place">📍 Lycée Edouard Branly · Lyon</div>
+        <div class="tl-desc">
+          Obtention du baccalauréat . Spécialités : Mathématiques et Physique-Chimie.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJETS -->
+  <section id="projets">
+    <div class="section-tag">// 05 · Projets</div>
+    <h2>Mes projets réalisés</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🖧</div>
+          <div>
+            <div class="project-title">Infrastructure réseau d'entreprise</div>
+            <div class="project-type">Projet SISR · BTS</div>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">Conception et déploiement d'une infrastructure réseau simulée sous Packet Tracer : segmentation VLAN, routage inter-VLAN, pare-feu.</p>
+          <div class="tag-row">
+            <span class="tag">Cisco</span>
+            <span class="tag">VLAN</span>
+            <span class="tag">Packet Tracer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🏢</div>
+          <div>
+            <div class="project-title">Déploiement Active Directory</div>
+            <div class="project-type">Projet Système · BTS</div>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">Mise en place d'un domaine Active Directory sous Windows Server 2022 : gestion des OU, GPO, stratégies de sécurité.</p>
+          <div class="tag-row">
+            <span class="tag">Windows Server</span>
+            <span class="tag">Active Directory</span>
+            <span class="tag">GPO</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🔒</div>
+          <div>
+            <div class="project-title">Audit de sécurité réseau</div>
+            <div class="project-type">Projet Cybersécurité · Stage</div>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">Réalisation d'un audit de sécurité du réseau d'une PME : analyse des flux réseau avec Wireshark, rapport de recommandations.</p>
+          <div class="tag-row">
+            <span class="tag">Wireshark</span>
+            <span class="tag">Audit</span>
+            <span class="tag">Rapport</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">☁️</div>
+          <div>
+            <a class="project-link" href="Siteweb.pdf" target="_blank" rel="noopener noreferrer">
+              <div class="project-title">Création de mon entreprise en ligne</div>
+            </a>
+            <div class="project-type">Projet Présence en ligne</div>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-desc">Conception et développement d'une entreprise en ligne sur WordPress.</p>
+          <div class="tag-row">
+            <span class="tag">WordPress</span>
+            <span class="tag">DNS</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- E5 TABLEAU -->
+  <section id="e5">
+    <div class="section-tag">// 06 · Épreuve E5</div>
+    <h2>Tableau de synthèse E5</h2>
+    <p style="margin-bottom:2rem;color:var(--steel);font-size:.9rem;line-height:1.7;">
+      Mon tableau de synthèse des situations professionnelles significatives (E5) recense l'ensemble de mes réalisations en lien avec les compétences du référentiel BTS SIO SISR. Il inclut mes activités en stage et en formation.
+    </p>
+
+    <div class="e5-block">
+      <div class="e5-icon">📋</div>
+      <div class="e5-text" style="flex:1">
+        <h3>Tableau de bord des activités E5</h3>
+        <p>Accède à mon tableau de synthèse complet listant toutes mes situations professionnelles significatives, les compétences associées et les preuves correspondantes.</p>
+      </div>
+      <a href="tableau.html" class="btn btn-primary" style="flex-shrink:0">
+        📊 Voir le tableau E5
+      </a>
+    </div>
+
+    <!-- Tableau récapitulatif rapide -->
+    <div style="margin-top:2rem;overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+        <thead>
+          <tr style="border-bottom:1px solid rgba(0,212,255,.2);">
+            <th style="text-align:left;padding:.75rem 1rem;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-weight:600;">N°</th>
+            <th style="text-align:left;padding:.75rem 1rem;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-weight:600;">Situation</th>
+            <th style="text-align:left;padding:.75rem 1rem;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-weight:600;">Compétences</th>
+            <th style="text-align:left;padding:.75rem 1rem;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-weight:600;">Lieu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(0,212,255,.06);">
+            <td style="padding:.75rem 1rem;color:var(--steel);font-family:'JetBrains Mono',monospace;">01</td>
+            <td style="padding:.75rem 1rem;color:var(--white);">Infrastructure réseau VLAN</td>
+            <td style="padding:.75rem 1rem;color:var(--text);">B1.1, B2.3</td>
+            <td style="padding:.75rem 1rem;color:var(--steel);">Stage</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,212,255,.06);">
+            <td style="padding:.75rem 1rem;color:var(--steel);font-family:'JetBrains Mono',monospace;">02</td>
+            <td style="padding:.75rem 1rem;color:var(--white);">Déploiement Active Directory</td>
+            <td style="padding:.75rem 1rem;color:var(--text);">B2.1, B2.2</td>
+            <td style="padding:.75rem 1rem;color:var(--steel);">BTS</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,212,255,.06);">
+            <td style="padding:.75rem 1rem;color:var(--steel);font-family:'JetBrains Mono',monospace;">03</td>
+            <td style="padding:.75rem 1rem;color:var(--white);">Audit de sécurité réseau</td>
+            <td style="padding:.75rem 1rem;color:var(--text);">B3.1, B3.2</td>
+            <td style="padding:.75rem 1rem;color:var(--steel);">Stage</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,212,255,.06);">
+            <td style="padding:.75rem 1rem;color:var(--steel);font-family:'JetBrains Mono',monospace;">04</td>
+            <td style="padding:.75rem 1rem;color:var(--white);">Serveur Linux multiservices</td>
+            <td style="padding:.75rem 1rem;color:var(--text);">B2.3, B2.4</td>
+            <td style="padding:.75rem 1rem;color:var(--steel);">BTS</td>
+          </tr>
+          <tr>
+            <td style="padding:.75rem 1rem;color:var(--steel);font-family:'JetBrains Mono',monospace;">05</td>
+            <td style="padding:.75rem 1rem;color:var(--white);">Scripts PowerShell AD</td>
+            <td style="padding:.75rem 1rem;color:var(--text);">B2.1, B2.5</td>
+            <td style="padding:.75rem 1rem;color:var(--steel);">BTS</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-tag">// 07 · Contact</div>
+    <h2>Me contacter</h2>
+    <p style="margin-bottom:2rem;color:var(--steel);font-size:.9rem;line-height:1.7;">
+      Tu as une question, une opportunité de stage ou simplement envie d'échanger ? N'hésite pas à me contacter via les moyens ci-dessous ou directement via le formulaire.
+    </p>
+
+    <div class="contact-grid">
+      <a href="mailto:ton.email@exemple.com" class="contact-card">
+        <div class="c-icon">✉️</div>
+        <div>
+          <div class="c-label">Email</div>
+          <div class="c-value">a.laurent@eleve.leschartreux.net</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/andrea-laurent-8387ba3b5/" target="_blank" class="contact-card">
+        <div class="c-icon">💼</div>
+        <div>
+          <div class="c-label">LinkedIn</div>
+          <div class="c-value">linkedin.com/in/Andrea Laurent</div>
+        </div>
+      </a>
+      <a href="https://github.com/unnainsolent" target="_blank" class="contact-card">
+        <div class="c-icon">🐙</div>
+        <div>
+          <div class="c-label">GitHub</div>
+          <div class="c-value">github.com/Unnainsolent</div>
+        </div>
+      </a>
+      <div class="contact-card" style="cursor:default;">
+        <div class="c-icon">📍</div>
+        <div>
+          <div class="c-label">Localisation</div>
+          <div class="c-value">Lyon, France</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mini formulaire -->
+    <div style="margin-top:2.5rem;">
+      <h3 style="font-family:'Space Grotesk',sans-serif;color:var(--white);margin-bottom:.5rem;font-size:1.05rem;">Formulaire de contact</h3>
+      <p style="font-size:.82rem;color:var(--steel);margin-bottom:1rem;">Ce formulaire est à titre indicatif – à connecter à un service comme Formspree ou Netlify Forms.</p>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>NOM</label>
+          <input type="text" placeholder="Votre nom" />
+        </div>
+        <div class="form-group">
+          <label>EMAIL</label>
+          <input type="email" placeholder="votre@email.com" />
+        </div>
+        <div class="form-group">
+          <label>SUJET</label>
+          <input type="text" placeholder="Sujet de votre message" />
+        </div>
+        <div class="form-group">
+          <label>ORGANISATION</label>
+          <input type="text" placeholder="Entreprise / École (optionnel)" />
+        </div>
+        <div class="form-group full">
+          <label>MESSAGE</label>
+          <textarea rows="5" placeholder="Votre message…"></textarea>
+        </div>
+        <div class="form-group full">
+          <button class="btn btn-primary" style="width:fit-content;border:none;" onclick="alert('Formulaire à connecter à un service (Formspree, Netlify…)')">📤 Envoyer le message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.35 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Terminal typing effect
+  const typedEl = document.querySelector('.typed');
+  const fullText = 'whoami';
+  typedEl.textContent = '';
+  let i = 0;
+  const type = () => {
+    if (i < fullText.length) {
+      typedEl.textContent += fullText[i++];
+      setTimeout(type, 90);
+    }
+  };
+  setTimeout(type, 600);
+</script>
+</body>
+</html>
